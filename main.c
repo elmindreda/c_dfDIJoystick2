@@ -1,6 +1,6 @@
 
-#include <initguid.h>
 #include <rpc.h>
+#include <initguid.h>
 #include <dinput.h>
 
 #include <stdio.h>
