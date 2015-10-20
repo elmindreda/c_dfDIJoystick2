@@ -6,6 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define ENTRY(x) { #x, x }
+
+typedef struct
+{
+    const char* name;
+    DWORD value;
+} Entry;
+
 int main(void)
 {
     DWORD i;
@@ -48,124 +56,116 @@ int main(void)
         else
             printf("NULL,");
 
-        if (odf->dwType & DIDFT_AXIS)
+        if (odf->dwType & DIDFT_AXIS || odf->dwType & DIDFT_POV)
         {
-            if (odf->dwOfs == DIJOFS_X)
-                printf("DIJOFS_X,");
-            else if (odf->dwOfs == DIJOFS_Y)
-                printf("DIJOFS_Y,");
-            else if (odf->dwOfs == DIJOFS_Z)
-                printf("DIJOFS_Z,");
-            else if (odf->dwOfs == DIJOFS_RX)
-                printf("DIJOFS_RX,");
-            else if (odf->dwOfs == DIJOFS_RY)
-                printf("DIJOFS_RY,");
-            else if (odf->dwOfs == DIJOFS_RZ)
-                printf("DIJOFS_RZ,");
-            else if (odf->dwOfs == DIJOFS_SLIDER(0))
-                printf("DIJOFS_SLIDER(0),");
-            else if (odf->dwOfs == DIJOFS_SLIDER(1))
-                printf("DIJOFS_SLIDER(1),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lVX))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lVX),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lVY))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lVY),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lVZ))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lVZ),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lVRx))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lVRx),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lVRy))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lVRy),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lVRz))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lVRz),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglVSlider[0]))
-                printf("FIELD_OFFSET(DIJOYSTATE2,rglVSlider[0]),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglVSlider[1]))
-                printf("FIELD_OFFSET(DIJOYSTATE2,rglVSlider[1]),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lAX))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lAX),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lAY))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lAY),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lAZ))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lAZ),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lARx))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lARx),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lARy))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lARy),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lARz))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lARz),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglASlider[0]))
-                printf("FIELD_OFFSET(DIJOYSTATE2,rglASlider[0]),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglASlider[1]))
-                printf("FIELD_OFFSET(DIJOYSTATE2,rglASlider[1]),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFX))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lFX),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFY))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lFY),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFZ))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lFZ),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFRx))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lFRx),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFRy))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lFRy),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFRz))
-                printf("FIELD_OFFSET(DIJOYSTATE2,lFRz),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglFSlider[0]))
-                printf("FIELD_OFFSET(DIJOYSTATE2,rglFSlider[0]),");
-            else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglFSlider[1]))
-                printf("FIELD_OFFSET(DIJOYSTATE2,rglFSlider[1]),");
-            else
-                exit(EXIT_FAILURE);
-        }
-        else if (odf->dwType & DIDFT_POV)
-        {
-            if (odf->dwOfs == DIJOFS_POV(0))
-                printf("DIJOFS_POV(0),");
-            else if (odf->dwOfs == DIJOFS_POV(1))
-                printf("DIJOFS_POV(1),");
-            else if (odf->dwOfs == DIJOFS_POV(2))
-                printf("DIJOFS_POV(2),");
-            else if (odf->dwOfs == DIJOFS_POV(3))
-                printf("DIJOFS_POV(3),");
-            else
+            int i;
+            const Entry entries[] =
+            {
+                ENTRY(DIJOFS_X),
+                ENTRY(DIJOFS_Y),
+                ENTRY(DIJOFS_Z),
+                ENTRY(DIJOFS_RX),
+                ENTRY(DIJOFS_RY),
+                ENTRY(DIJOFS_RZ),
+                ENTRY(DIJOFS_SLIDER(0)),
+                ENTRY(DIJOFS_SLIDER(1)),
+                ENTRY(DIJOFS_POV(0)),
+                ENTRY(DIJOFS_POV(1)),
+                ENTRY(DIJOFS_POV(2)),
+                ENTRY(DIJOFS_POV(3)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lVX)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lVY)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lVZ)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lVRx)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lVRy)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lVRz)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,rglVSlider[0])),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,rglVSlider[1])),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lAX)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lAY)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lAZ)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lARx)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lARy)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lARz)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,rglASlider[0])),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,rglASlider[1])),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lFX)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lFY)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lFZ)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lFRx)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lFRy)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,lFRz)),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,rglFSlider[0])),
+                ENTRY(FIELD_OFFSET(DIJOYSTATE2,rglFSlider[1]))
+            };
+
+            for (i = 0;  i < sizeof(entries) / sizeof(Entry);  i++)
+            {
+                if (odf->dwOfs == entries[i].value)
+                {
+                    printf("%s,", entries[i].name);
+                    break;
+                }
+            }
+
+            if (i == sizeof(entries) / sizeof(Entry))
                 exit(EXIT_FAILURE);
         }
         else if (odf->dwType & DIDFT_BUTTON)
-        {
             printf("DIJOFS_BUTTON(%u),", odf->dwOfs - DIJOFS_BUTTON0);
-        }
         else
             exit(EXIT_FAILURE);
 
-        if (odf->dwType)
         {
-            if ((odf->dwType & DIDFT_AXIS) == DIDFT_AXIS)
-                printf("DIDFT_AXIS|");
-            if ((odf->dwType & DIDFT_BUTTON) == DIDFT_BUTTON)
-                printf("DIDFT_BUTTON|");
-            if (odf->dwType & DIDFT_POV)
-                printf("DIDFT_POV|");
-            if (odf->dwType & DIDFT_OPTIONAL)
-                printf("DIDFT_OPTIONAL|");
-            if ((odf->dwType & DIDFT_ANYINSTANCE) == DIDFT_ANYINSTANCE)
-                printf("DIDFT_ANYINSTANCE|");
+            int i, first = 1;
+            const Entry entries[] =
+            {
+                ENTRY(DIDFT_AXIS),
+                ENTRY(DIDFT_BUTTON),
+                ENTRY(DIDFT_POV),
+                ENTRY(DIDFT_OPTIONAL),
+                ENTRY(DIDFT_ANYINSTANCE)
+            };
+
+            for (i = 0;  i < sizeof(entries) / sizeof(Entry);  i++)
+            {
+                if ((odf->dwType & entries[i].value) == entries[i].value)
+                {
+                    if (!first)
+                        printf("|");
+
+                    printf("%s", entries[i].name);
+                    first = 0;
+                }
+            }
+
+            printf(",");
         }
 
-        printf("0,");
-
-        if (odf->dwFlags)
         {
-            if (odf->dwFlags & DIDOI_ASPECTACCEL)
-                printf("DIDOI_ASPECTACCEL|");
-            if (odf->dwFlags & DIDOI_ASPECTFORCE)
-                printf("DIDOI_ASPECTFORCE|");
-            if (odf->dwFlags & DIDOI_ASPECTPOSITION)
-                printf("DIDOI_ASPECTPOSITION|");
-            if (odf->dwFlags & DIDOI_ASPECTVELOCITY)
-                printf("DIDOI_ASPECTVELOCITY|");
+            int i, first = 1;
+            const Entry entries[] =
+            {
+                ENTRY(DIDOI_ASPECTACCEL),
+                ENTRY(DIDOI_ASPECTFORCE),
+                ENTRY(DIDOI_ASPECTPOSITION),
+                ENTRY(DIDOI_ASPECTVELOCITY)
+            };
+
+            for (i = 0;  i < sizeof(entries) / sizeof(Entry);  i++)
+            {
+                if ((odf->dwFlags & entries[i].value) == entries[i].value)
+                {
+                    if (!first)
+                        printf("|");
+
+                    printf("%s", entries[i].name);
+                    first = 0;
+                }
+            }
         }
 
-        printf("0 },\n");
+        printf(" },\n");
     }
 
     exit(EXIT_SUCCESS);
