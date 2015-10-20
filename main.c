@@ -109,7 +109,7 @@ int main(void)
             else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFRy))
                 printf("FIELD_OFFSET(DIJOYSTATE2,lFRy),");
             else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,lFRz))
-                printf("FIELD_OFFSET(DIJOYSTFTE2,lFRz),");
+                printf("FIELD_OFFSET(DIJOYSTATE2,lFRz),");
             else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglFSlider[0]))
                 printf("FIELD_OFFSET(DIJOYSTATE2,rglFSlider[0]),");
             else if (odf->dwOfs == FIELD_OFFSET(DIJOYSTATE2,rglFSlider[1]))
@@ -139,15 +139,15 @@ int main(void)
 
         if (odf->dwType)
         {
-            if (odf->dwType & DIDFT_AXIS)
+            if ((odf->dwType & DIDFT_AXIS) == DIDFT_AXIS)
                 printf("DIDFT_AXIS|");
-            if (odf->dwType & DIDFT_BUTTON)
+            if ((odf->dwType & DIDFT_BUTTON) == DIDFT_BUTTON)
                 printf("DIDFT_BUTTON|");
             if (odf->dwType & DIDFT_POV)
                 printf("DIDFT_POV|");
             if (odf->dwType & DIDFT_OPTIONAL)
                 printf("DIDFT_OPTIONAL|");
-            if (odf->dwType & DIDFT_ANYINSTANCE)
+            if ((odf->dwType & DIDFT_ANYINSTANCE) == DIDFT_ANYINSTANCE)
                 printf("DIDFT_ANYINSTANCE|");
         }
 
@@ -156,13 +156,13 @@ int main(void)
         if (odf->dwFlags)
         {
             if (odf->dwFlags & DIDOI_ASPECTACCEL)
-                printf(" DIDOI_ASPECTACCEL|");
+                printf("DIDOI_ASPECTACCEL|");
             if (odf->dwFlags & DIDOI_ASPECTFORCE)
-                printf(" DIDOI_ASPECTFORCE|");
+                printf("DIDOI_ASPECTFORCE|");
             if (odf->dwFlags & DIDOI_ASPECTPOSITION)
-                printf(" DIDOI_ASPECTPOSITION|");
+                printf("DIDOI_ASPECTPOSITION|");
             if (odf->dwFlags & DIDOI_ASPECTVELOCITY)
-                printf(" DIDOI_ASPECTVELOCITY|");
+                printf("DIDOI_ASPECTVELOCITY|");
         }
 
         printf("0 },\n");
