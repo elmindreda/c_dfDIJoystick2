@@ -139,6 +139,9 @@ int main(void)
                 }
             }
 
+            if (first)
+                printf("0");
+
             printf(",");
         }
 
@@ -163,6 +166,9 @@ int main(void)
                     first = 0;
                 }
             }
+
+            if (first)
+                printf("0");
         }
 
         printf(" },\n");
