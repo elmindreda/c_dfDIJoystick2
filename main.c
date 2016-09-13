@@ -18,6 +18,13 @@ int main(void)
 {
     DWORD i;
 
+    printf("{ %u, %u, 0x%08x, %u, %u, objects };\n",
+           c_dfDIJoystick2.dwSize,
+           c_dfDIJoystick2.dwObjSize,
+           c_dfDIJoystick2.dwFlags,
+           c_dfDIJoystick2.dwDataSize,
+           c_dfDIJoystick2.dwNumObjs);
+
     for (i = 0;  i < c_dfDIJoystick2.dwNumObjs;  i++)
     {
         DIOBJECTDATAFORMAT* odf = c_dfDIJoystick2.rgodf + i;
